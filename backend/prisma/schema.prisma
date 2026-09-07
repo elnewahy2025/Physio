@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  OWNER
+  THERAPIST
+  SECRETARY
+  PATIENT
+}
+
+enum AppointmentStatus {
+  REQUESTED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  PARTIALLY_PAID
+  VOID
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  phone        String?
+  passwordHash String
+  role         UserRole
+  patient      Patient?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  appointments Appointment[] @relation("TherapistAppointments")
+  sessions     TherapySession[]
+}
+
+model Patient {
+  id              String         @id @default(cuid())
+  userId          String?        @unique
+  user            User?          @relation(fields: [userId], references: [id])
+  name            String
+  phone           String
+  email           String?
+  address         String?
+  medicalHistory  String?
+  dateOfBirth     DateTime?
+  appointments    Appointment[]
+  invoices        Invoice[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model Room {
+  id           String        @id @default(cuid())
+  number       Int           @unique
+  name         String
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  patientId   String
+  therapistId String
+  roomId      String
+  startsAt    DateTime
+  endsAt      DateTime
+  status      AppointmentStatus @default(REQUESTED)
+  notes       String?
+  patient     Patient           @relation(fields: [patientId], references: [id])
+  therapist   User              @relation("TherapistAppointments", fields: [therapistId], references: [id])
+  room        Room              @relation(fields: [roomId], references: [id])
+  session     TherapySession?
+  invoice     Invoice?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  @@index([startsAt, endsAt])
+  @@index([therapistId, startsAt])
+  @@index([roomId, startsAt])
+}
+
+model TherapySession {
+  id            String       @id @default(cuid())
+  appointmentId String       @unique
+  therapistId   String
+  diagnosis     String?
+  treatmentPlan String?
+  notes         String?
+  durationMin   Int?
+  painLevel     Int?
+  attendedAt    DateTime?
+  appointment   Appointment  @relation(fields: [appointmentId], references: [id])
+  therapist     User         @relation(fields: [therapistId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  patientId     String
+  appointmentId String        @unique
+  subtotal      Decimal       @db.Decimal(12, 2)
+  tax           Decimal       @db.Decimal(12, 2)
+  total         Decimal       @db.Decimal(12, 2)
+  currency      String        @default("EGP")
+  dueDate       DateTime?
+  status        InvoiceStatus @default(DRAFT)
+  patient       Patient       @relation(fields: [patientId], references: [id])
+  appointment   Appointment   @relation(fields: [appointmentId], references: [id])
+  payments      Payment[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  amount      Decimal  @db.Decimal(12, 2)
+  method      String
+  reference   String?
+  paidAt      DateTime @default(now())
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+}
+
+model Setting {
+  id                    String   @id @default(cuid())
+  centerName            String   @default("Physio Center")
+  centerLogo            String?
+  address               String?
+  phone                 String?
+  email                 String?
+  googleMapsLink        String?
+  workingHours          Json?
+  sessionPrice          Decimal? @db.Decimal(12, 2)
+  currency              String   @default("EGP")
+  taxRate               Decimal  @default(0) @db.Decimal(5, 2)
+  defaultLanguage       String   @default("ar-EG")
+  timezone              String   @default("Africa/Cairo")
+  whatsappMessageTemplate String?
+  updatedAt             DateTime @updatedAt
+}

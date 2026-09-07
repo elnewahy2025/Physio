@@ -1,0 +1,25 @@
+{
+  "name": "physio-center",
+  "private": true,
+  "packageManager": "pnpm@10.15.0",
+  "engines": { "node": ">=24.0.0 <25" },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @physio/frontend --filter @physio/backend dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "db:generate": "pnpm --filter @physio/backend db:generate",
+    "db:migrate": "pnpm --filter @physio/backend db:migrate",
+    "db:seed": "pnpm --filter @physio/backend db:seed"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "globals": "^16.4.0",
+    "prettier": "^3.9.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.46.0"
+  }
+}

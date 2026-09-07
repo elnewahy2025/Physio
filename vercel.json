@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "pnpm --filter @physio/frontend build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "pnpm install --frozen-lockfile"
+}
