@@ -1,0 +1,10 @@
+node_modules
+.pnpm-store
+.pnpm
+.DS_Store
+.env
+.env.local
+*.log
+build
+dist
+prisma/migrations

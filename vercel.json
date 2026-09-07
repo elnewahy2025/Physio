@@ -2,5 +2,17 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm --filter @physio/frontend build",
   "outputDirectory": "frontend/dist",
-  "installCommand": "pnpm install --frozen-lockfile"
+  "installCommand": "pnpm install --frozen-lockfile",
+  "functions": {
+    "backend/src/server.ts": {
+      "memory": 3008,
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/api/(.*)"
+    }
+  ]
 }
