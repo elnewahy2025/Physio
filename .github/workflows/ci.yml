@@ -25,6 +25,9 @@ jobs:
         with:
           version: "10"
 
+      - name: Add pnpm to PATH
+        run: echo "$HOME/.pnpm-global/bin" >> $GITHUB_PATH
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
