@@ -158,7 +158,37 @@ The Vercel Function region should be configured as close as practical to the sel
 | WhatsApp API automation                     | Not in initial release; direct links only                               |
 | Railway backend hosting                     | Not selected for initial release; retain as a future portability option |
 
-## 11. References
+## 11. M2 Secure Access - Implementation Complete
+
+M2 Secure Access has been fully implemented with the following components:
+
+### Backend Implementation
+
+- **JWT Token Management**: Access and refresh token generation with configurable expiration
+- **Password Hashing**: Bcrypt-based secure password storage
+- **Authentication Middleware**: `authenticate`, `optionalAuth`, `authorize` with role-specific helpers
+- **Auth Service**: User registration, login, logout, refresh, and user management
+- **Auth Routes**: RESTful endpoints at `/api/auth/*`
+- **Type Safety**: Full TypeScript contracts shared between frontend and backend
+
+### Frontend Implementation
+
+- **Auth Context**: React context with hooks (`useAuth`, `useCurrentUser`, `useIsAuthenticated`, `useHasRole`)
+- **Auth API Client**: Token management, automatic header injection
+- **Login/Register Pages**: Form validation, error handling, role selection
+- **Protected Routes**: Route wrappers for authentication and role-based access control
+
+### Testing
+
+- **Backend Tests**: Integration tests for all auth routes in `backend/tests/auth.test.ts`
+- **All checks passing**: lint, typecheck, format:check
+
+### Configuration
+
+- **Environment Variables**: `JWT_SECRET`, `JWT_ACCESS_EXPIRES_IN`, `JWT_REFRESH_EXPIRES_IN`, `BCRYPT_ROUNDS`
+- **Security**: Minimum 32-character JWT secret, 12 bcrypt rounds by default
+
+## 12. References
 
 [1]: https://vercel.com/docs/functions/configuring-functions/region "Vercel Functions regions and failover documentation"
 [2]: https://neon.com/docs/guides/vercel-overview "Neon and Vercel integration documentation"

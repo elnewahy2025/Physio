@@ -88,6 +88,7 @@ Physio/
 | Milestone                  | Status          | Description                                   |
 | -------------------------- | --------------- | --------------------------------------------- |
 | **M1 - Foundation**        | ✅ **Complete** | Monorepo, Vercel config, Prisma schema, CI/CD |
+| **M2 - Secure Access**     | ✅ **Complete** | Authentication, authorization, sessions       |
 | **M2 - Secure Access**     | 📋 Planned      | Authentication, authorization, sessions       |
 | **M3 - Scheduling MVP**    | 📋 Planned      | Appointments, rooms, conflict checks          |
 | **M4 - Treatment Records** | 📋 Planned      | Therapy sessions, notes, attendance           |
@@ -115,6 +116,12 @@ VITE_API_URL="http://localhost:3000"
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/physio?schema=public"
 PORT=3000
+
+# Authentication (M2)
+JWT_SECRET="your-super-secret-jwt-key-at-least-32-characters-long"
+JWT_ACCESS_EXPIRES_IN="15m"
+JWT_REFRESH_EXPIRES_IN="7d"
+BCRYPT_ROUNDS=12
 ```
 
 **Frontend `.env`:**
@@ -215,11 +222,12 @@ For questions or issues, please refer to:
 
 - [Project Plan](./Project_plan.md) - File of truth for scope and architecture
 - [M1 Setup Guide](./docs/M1_SETUP.md) - Detailed setup instructions
+- [M2 Authentication](./docs/M2_AUTH.md) - Authentication system documentation
 
 ---
 
 **Repository**: [https://github.com/elnewahy2025/Physio](https://github.com/elnewahy2025/Physio)
 
-**Status**: M1 Foundation Complete ✅
+**Status**: M1 Foundation ✅ | M2 Authentication ✅
 
 **Launch Target**: Egypt (Africa/Cairo timezone, EGP currency)
