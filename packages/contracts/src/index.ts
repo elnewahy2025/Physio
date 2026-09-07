@@ -30,6 +30,14 @@ export type CreateUserInput = {
   role: UserRole;
 };
 
+export type RegisterInput = {
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  phone?: string;
+};
+
 export type LoginInput = {
   email: string;
   password: string;
@@ -39,6 +47,32 @@ export type LoginResponse = {
   user: User;
   token: string;
   expiresAt: string;
+};
+
+// M2: Authentication Types
+export type AuthTokens = {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+};
+
+export type AuthResponse = {
+  user: User;
+  tokens: AuthTokens;
+};
+
+export type MeResponse = {
+  user: User;
+};
+
+export type RefreshTokenInput = {
+  refreshToken: string;
+};
+
+export type TokenPayload = {
+  userId: string;
+  role: UserRole;
+  email: string;
 };
 
 // ============================================
