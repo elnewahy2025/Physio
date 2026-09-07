@@ -1,6 +1,18 @@
-import type { HealthStatus, ApiError } from "@physio/contracts";
+import type {
+  HealthStatus,
+  ApiError,
+  RegisterInput,
+  LoginInput,
+  AuthResponse,
+  RefreshTokenInput,
+  MeResponse,
+} from "@physio/contracts";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+
+// Storage keys for auth tokens
+const ACCESS_TOKEN_KEY = "physio_access_token";
+const REFRESH_TOKEN_KEY = "physio_refresh_token";
 
 /**
  * API Client for Physio Center Management System
@@ -8,6 +20,12 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
  */
 
 class ApiClient {
+  private getAuthHeader(): Record<string, string> {
+    if (typeof window === "undefined") return {};
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
   private async request<T>(
     method: string,
     endpoint: string,
@@ -29,6 +47,7 @@ class ApiClient {
       method,
       headers: {
         "Content-Type": "application/json",
+        ...this.getAuthHeader(),
       },
       body: data ? JSON.stringify(data) : undefined,
     };
@@ -79,6 +98,87 @@ class ApiClient {
   // Health check
   async health(): Promise<HealthStatus> {
     return this.get<HealthStatus>("/health");
+  }
+
+  // Authentication methods
+
+  /**
+   * Store auth tokens in localStorage
+   */
+  setTokens(tokens: { accessToken: string; refreshToken: string }): void {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
+      localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
+    }
+  }
+
+  /**
+   * Clear auth tokens from localStorage
+   */
+  clearTokens(): void {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_KEY);
+    }
+  }
+
+  /**
+   * Get access token from localStorage
+   */
+  getAccessToken(): string | null {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(ACCESS_TOKEN_KEY);
+    }
+    return null;
+  }
+
+  /**
+   * Register a new user
+   */
+  async register(input: RegisterInput): Promise<AuthResponse> {
+    const response = await this.post<AuthResponse>("/auth/register", input);
+    this.setTokens({
+      accessToken: response.tokens.accessToken,
+      refreshToken: response.tokens.refreshToken,
+    });
+    return response;
+  }
+
+  /**
+   * Login user
+   */
+  async login(input: LoginInput): Promise<AuthResponse> {
+    const response = await this.post<AuthResponse>("/auth/login", input);
+    this.setTokens({
+      accessToken: response.tokens.accessToken,
+      refreshToken: response.tokens.refreshToken,
+    });
+    return response;
+  }
+
+  /**
+   * Logout user
+   */
+  async logout(): Promise<{ message: string }> {
+    const result = await this.post<{ message: string }>("/auth/logout", {});
+    this.clearTokens();
+    return result;
+  }
+
+  /**
+   * Refresh access token
+   */
+  async refreshToken(input: RefreshTokenInput): Promise<AuthResponse> {
+    const response = await this.post<AuthResponse>("/auth/refresh", input);
+    this.setTokens(response.tokens);
+    return response;
+  }
+
+  /**
+   * Get current user
+   */
+  async me(): Promise<MeResponse> {
+    return this.get<MeResponse>("/auth/me");
   }
 }
 
