@@ -71,12 +71,8 @@ export type CreatePatientInput = {
 // Appointment Types
 // ============================================
 
-export type AppointmentStatus = 
-  | "REQUESTED"
-  | "CONFIRMED" 
-  | "COMPLETED"
-  | "CANCELLED"
-  | "NO_SHOW";
+export type AppointmentStatus =
+  "REQUESTED" | "CONFIRMED" | "COMPLETED" | "CANCELLED" | "NO_SHOW";
 
 export type Appointment = {
   id: string;
@@ -153,12 +149,8 @@ export type CreateTherapySessionInput = {
 // Invoice Types
 // ============================================
 
-export type InvoiceStatus = 
-  | "DRAFT"
-  | "ISSUED" 
-  | "PAID"
-  | "PARTIALLY_PAID"
-  | "VOID";
+export type InvoiceStatus =
+  "DRAFT" | "ISSUED" | "PAID" | "PARTIALLY_PAID" | "VOID";
 
 export type Invoice = {
   id: string;

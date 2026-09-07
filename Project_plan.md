@@ -18,12 +18,12 @@ Physio is a responsive Progressive Web Application for managing a physiotherapy 
 
 The application serves four roles: **Owner**, **Therapist**, **Secretary**, and **Patient**. The first release prioritizes reliable center operations. Online payment processing is explicitly deferred to a future phase.
 
-| Role | Initial responsibilities |
-|---|---|
-| **Owner** | Dashboard, user management, settings, operational and financial summaries |
-| **Therapist** | Assigned calendar, patient history, treatment notes, attendance |
+| Role          | Initial responsibilities                                                             |
+| ------------- | ------------------------------------------------------------------------------------ |
+| **Owner**     | Dashboard, user management, settings, operational and financial summaries            |
+| **Therapist** | Assigned calendar, patient history, treatment notes, attendance                      |
 | **Secretary** | Patient registration, appointments, invoices, manual payment records, WhatsApp links |
-| **Patient** | Booking requests, own records, invoices, notifications, ratings where enabled |
+| **Patient**   | Booking requests, own records, invoices, notifications, ratings where enabled        |
 
 ## 2. Launch Constraints and Localization
 
@@ -53,15 +53,15 @@ The API must remain portable. If future requirements need persistent processes, 
 
 We will use current stable versions that are mutually compatible at implementation time rather than preserving obsolete version numbers from the original draft. The selected versions will be recorded in `package.json` and the committed lockfile.
 
-| Layer | Approved baseline |
-|---|---|
-| Runtime | Node.js 24 LTS; Node.js 26 Current is not the production baseline. The official release schedule identifies Node 24 as LTS.[3] |
-| Package manager | pnpm workspaces with a committed lockfile |
-| Frontend | React 19-compatible release, Vite current stable, TypeScript current stable, React Router current stable, TanStack Query current stable, and Tailwind CSS current stable |
-| Backend | Express 5-compatible release, TypeScript current stable, Prisma current stable compatible with Node 24/PostgreSQL, and schema validation |
-| Database | Managed PostgreSQL through Neon |
-| Deployment | Vercel for application hosting; Neon for PostgreSQL |
-| Testing | Vitest for unit/integration tests and browser-level workflow tests as the product becomes functional |
+| Layer           | Approved baseline                                                                                                                                                        |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Runtime         | Node.js 24 LTS; Node.js 26 Current is not the production baseline. The official release schedule identifies Node 24 as LTS.[3]                                           |
+| Package manager | pnpm workspaces with a committed lockfile                                                                                                                                |
+| Frontend        | React 19-compatible release, Vite current stable, TypeScript current stable, React Router current stable, TanStack Query current stable, and Tailwind CSS current stable |
+| Backend         | Express 5-compatible release, TypeScript current stable, Prisma current stable compatible with Node 24/PostgreSQL, and schema validation                                 |
+| Database        | Managed PostgreSQL through Neon                                                                                                                                          |
+| Deployment      | Vercel for application hosting; Neon for PostgreSQL                                                                                                                      |
+| Testing         | Vitest for unit/integration tests and browser-level workflow tests as the product becomes functional                                                                     |
 
 Exact package versions will be resolved during M1 and locked for reproducible builds. Dependencies must be reviewed for Node 24 compatibility before installation.
 
@@ -77,16 +77,16 @@ Online payments are a future phase requiring a separately selected Egypt-support
 
 ## 6. Delivery Milestones
 
-| Milestone | Scope | Acceptance criteria |
-|---|---|---|
-| **M1 — Foundation** | Monorepo, current compatible versions, Vercel configuration, Neon connection, Prisma schema, migrations, seed data, linting, formatting, type-checking, and CI. | Frontend and backend build locally; database schema can be migrated and seeded; CI checks are documented and reproducible. |
-| **M2 — Secure access** | Login, logout, refresh/session handling, password hashing, role-based authorization, protected routes, and account isolation. | Each role can authenticate and unauthorized or cross-role access is rejected by automated tests. |
-| **M3 — Scheduling MVP** | Patient registration, therapists, six rooms, appointment creation, confirmation, cancellation, rescheduling, conflict checks, and calendar queries. | A secretary can register a patient and book an appointment without violating room or therapist constraints. |
-| **M4 — Treatment records** | Diagnosis, treatment plans, therapist notes, pain level, duration, attendance, and patient history. | Therapists can record assigned treatment sessions; patients can access only their own permitted records. |
-| **M5 — Manual billing** | EGP invoices, configurable tax, manual payment statuses, branded PDF invoices, invoice history, and financial summaries. | Staff can create and download a readable Arabic/English PDF invoice using settings-driven center details. |
-| **M6 — Role dashboards** | Owner, therapist, secretary, and patient screens with Arabic/English UI, RTL/LTR layouts, responsive behavior, and complete state handling. | Primary workflows operate end to end against the real API. |
-| **M7 — Integrations and PWA** | WhatsApp deep links, Google Maps, in-app notifications, installability, IndexedDB caching, and scoped synchronization. | Core read workflows remain available offline and queued low-risk writes synchronize safely. |
-| **M8 — Quality and launch** | Authorization, concurrency, PDF, browser workflow, security, performance, deployment, monitoring, backup, and rollback checks. | Critical workflows pass release gates and production procedures are documented. |
+| Milestone                     | Scope                                                                                                                                                           | Acceptance criteria                                                                                                        |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **M1 — Foundation**           | Monorepo, current compatible versions, Vercel configuration, Neon connection, Prisma schema, migrations, seed data, linting, formatting, type-checking, and CI. | Frontend and backend build locally; database schema can be migrated and seeded; CI checks are documented and reproducible. |
+| **M2 — Secure access**        | Login, logout, refresh/session handling, password hashing, role-based authorization, protected routes, and account isolation.                                   | Each role can authenticate and unauthorized or cross-role access is rejected by automated tests.                           |
+| **M3 — Scheduling MVP**       | Patient registration, therapists, six rooms, appointment creation, confirmation, cancellation, rescheduling, conflict checks, and calendar queries.             | A secretary can register a patient and book an appointment without violating room or therapist constraints.                |
+| **M4 — Treatment records**    | Diagnosis, treatment plans, therapist notes, pain level, duration, attendance, and patient history.                                                             | Therapists can record assigned treatment sessions; patients can access only their own permitted records.                   |
+| **M5 — Manual billing**       | EGP invoices, configurable tax, manual payment statuses, branded PDF invoices, invoice history, and financial summaries.                                        | Staff can create and download a readable Arabic/English PDF invoice using settings-driven center details.                  |
+| **M6 — Role dashboards**      | Owner, therapist, secretary, and patient screens with Arabic/English UI, RTL/LTR layouts, responsive behavior, and complete state handling.                     | Primary workflows operate end to end against the real API.                                                                 |
+| **M7 — Integrations and PWA** | WhatsApp deep links, Google Maps, in-app notifications, installability, IndexedDB caching, and scoped synchronization.                                          | Core read workflows remain available offline and queued low-risk writes synchronize safely.                                |
+| **M8 — Quality and launch**   | Authorization, concurrency, PDF, browser workflow, security, performance, deployment, monitoring, backup, and rollback checks.                                  | Critical workflows pass release gates and production procedures are documented.                                            |
 
 ## 7. M1 Foundation Scope
 
@@ -144,22 +144,22 @@ The Vercel Function region should be configured as close as practical to the sel
 
 ## 10. Decision Log
 
-| Decision | Status |
-|---|---|
-| Use current compatible versions | Approved |
-| Use Node 24 LTS production baseline | Approved |
-| Use Vercel for application hosting | Approved |
-| Use Neon for PostgreSQL | Approved |
-| Launch country is Egypt | Approved |
-| Default currency is EGP | Approved |
-| Default timezone is Africa/Cairo | Approved |
-| Online payments in initial release | Explicitly deferred |
-| Manual payment recording in initial release | Approved |
-| WhatsApp API automation | Not in initial release; direct links only |
-| Railway backend hosting | Not selected for initial release; retain as a future portability option |
+| Decision                                    | Status                                                                  |
+| ------------------------------------------- | ----------------------------------------------------------------------- |
+| Use current compatible versions             | Approved                                                                |
+| Use Node 24 LTS production baseline         | Approved                                                                |
+| Use Vercel for application hosting          | Approved                                                                |
+| Use Neon for PostgreSQL                     | Approved                                                                |
+| Launch country is Egypt                     | Approved                                                                |
+| Default currency is EGP                     | Approved                                                                |
+| Default timezone is Africa/Cairo            | Approved                                                                |
+| Online payments in initial release          | Explicitly deferred                                                     |
+| Manual payment recording in initial release | Approved                                                                |
+| WhatsApp API automation                     | Not in initial release; direct links only                               |
+| Railway backend hosting                     | Not selected for initial release; retain as a future portability option |
 
 ## 11. References
 
-[1]: https://vercel.com/docs/functions/configuring-functions/region "Vercel Functions regions and failover documentation"  
-[2]: https://neon.com/docs/guides/vercel-overview "Neon and Vercel integration documentation"  
+[1]: https://vercel.com/docs/functions/configuring-functions/region "Vercel Functions regions and failover documentation"
+[2]: https://neon.com/docs/guides/vercel-overview "Neon and Vercel integration documentation"
 [3]: https://nodejs.org/en/about/previous-releases "Official Node.js release and LTS schedule"

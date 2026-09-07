@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "../lib/api-client";
-import type { HealthStatus } from "@physio/contracts";
 
 export function Home() {
-  const { data: health, isLoading, error } = useQuery({
+  const {
+    data: health,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["health"],
     queryFn: () => apiClient.health(),
   });
@@ -23,9 +26,7 @@ export function Home() {
       </div>
 
       <div className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          API Status
-        </h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">API Status</h3>
         {isLoading && <p className="text-gray-500">Checking...</p>}
         {error && (
           <p className="text-red-500">Error: {(error as Error).message}</p>
@@ -37,9 +38,7 @@ export function Home() {
                 health.status === "ok" ? "bg-green-500" : "bg-red-500"
               }`}
             />
-            <span className="text-gray-700">
-              Status: {health.status}
-            </span>
+            <span className="text-gray-700">Status: {health.status}</span>
             <span className="text-gray-500">({health.service})</span>
           </div>
         )}

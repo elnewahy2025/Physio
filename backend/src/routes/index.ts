@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Router, type Router as ExpressRouter } from "express";
 import { healthRouter } from "./health.js";
 
-export const apiRouter = Router();
+const apiRouter: ExpressRouter = Router();
 
-// Health check
-apiRouter.use("/health", healthRouter);
+// Health check - mount at root of apiRouter
+apiRouter.use(healthRouter);
 
 // Core domain routes (stubs for M1)
 // These will be implemented in subsequent milestones
@@ -16,3 +16,5 @@ apiRouter.use("/invoices", Router());
 apiRouter.use("/payments", Router());
 apiRouter.use("/rooms", Router());
 apiRouter.use("/settings", Router());
+
+export { apiRouter };

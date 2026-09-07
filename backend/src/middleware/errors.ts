@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import type { NextFunction } from "express";
 import { z } from "zod";
 
 /**
@@ -70,17 +70,20 @@ export class BadRequestError extends ApiError {
  * Global error handler middleware
  * Must be registered last, after all routes
  */
-export const errorHandler: ErrorRequestHandler = (
+export const errorHandler = (
   error: Error,
-  _req: Request,
-  res: Response,
+  _req: unknown,
+  res: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
   console.error("Error:", error);
 
+  const response = res as Response;
+
   // Handle Zod validation errors
   if (error instanceof z.ZodError) {
-    return res.status(400).json({
+    return response.status(400).json({
       error: {
         code: "VALIDATION_ERROR",
         message: "Request validation failed",
@@ -91,7 +94,7 @@ export const errorHandler: ErrorRequestHandler = (
 
   // Handle custom API errors
   if (error instanceof ApiError) {
-    return res.status(error.statusCode).json({
+    return response.status(error.statusCode).json({
       error: {
         code: error.code,
         message: error.message,
@@ -101,7 +104,7 @@ export const errorHandler: ErrorRequestHandler = (
   }
 
   // Handle generic errors
-  return res.status(500).json({
+  return response.status(500).json({
     error: {
       code: "INTERNAL_ERROR",
       message: "An unexpected error occurred",
@@ -113,12 +116,14 @@ export const errorHandler: ErrorRequestHandler = (
  * 404 handler for unmatched routes
  * Must be registered before the error handler
  */
-export const notFoundHandler: ErrorRequestHandler = (
-  _req: Request,
-  res: Response,
+export const notFoundHandler = (
+  _req: unknown,
+  res: unknown,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
-  res.status(404).json({
+  const response = res as Response;
+  response.status(404).json({
     error: {
       code: "NOT_FOUND",
       message: "Resource not found",

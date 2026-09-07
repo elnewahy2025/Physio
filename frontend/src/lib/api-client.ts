@@ -1,9 +1,4 @@
-import type {
-  HealthStatus,
-  ApiResponse,
-  ApiError,
-  PaginationParams,
-} from "@physio/contracts";
+import type { HealthStatus, ApiError } from "@physio/contracts";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
@@ -20,7 +15,7 @@ class ApiClient {
     params?: Record<string, string | number | undefined>
   ): Promise<T> {
     const url = new URL(`${API_BASE_URL}/api${endpoint}`);
-    
+
     // Add query parameters
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
