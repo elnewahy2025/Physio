@@ -64,6 +64,7 @@ pnpm db:seed
 ```
 
 **Note**: The initial migration (`20260907084230_init`) is already committed. To apply it to your database:
+
 ```bash
 pnpm db:migrate deploy
 ```
@@ -81,6 +82,7 @@ pnpm --filter @physio/frontend dev
 ```
 
 Access the application:
+
 - **Frontend**: http://localhost:5173
 - **API Health**: http://localhost:3000/api/health
 
@@ -137,23 +139,24 @@ Physio/
 
 ## Technology Stack
 
-| Layer | Technology | Version |
-|-------|------------|---------|
-| Runtime | Node.js | 24 LTS |
-| Package Manager | pnpm | 10+ |
-| Frontend | React 19 + Vite 8 + TypeScript 5 | Latest |
-| Styling | Tailwind CSS 3 | Latest |
-| Backend | Express 5 + TypeScript 5 | Latest |
-| ORM | Prisma 7 | 7.10.0 |
-| Database | PostgreSQL | 15+ |
-| Hosting | Vercel (frontend + backend) | - |
-| Database Hosting | Neon (managed PostgreSQL) | - |
+| Layer            | Technology                       | Version |
+| ---------------- | -------------------------------- | ------- |
+| Runtime          | Node.js                          | 24 LTS  |
+| Package Manager  | pnpm                             | 10+     |
+| Frontend         | React 19 + Vite 8 + TypeScript 5 | Latest  |
+| Styling          | Tailwind CSS 3                   | Latest  |
+| Backend          | Express 5 + TypeScript 5         | Latest  |
+| ORM              | Prisma 7                         | 7.10.0  |
+| Database         | PostgreSQL                       | 15+     |
+| Hosting          | Vercel (frontend + backend)      | -       |
+| Database Hosting | Neon (managed PostgreSQL)        | -       |
 
 ## Configuration
 
 ### Environment Variables
 
 #### Root `.env`
+
 ```
 DATABASE_URL="postgresql://user:password@localhost:5432/physio?schema=public"
 PORT=3000
@@ -161,12 +164,14 @@ VITE_API_URL="http://localhost:3000"
 ```
 
 #### Backend `.env`
+
 ```
 DATABASE_URL="postgresql://user:password@localhost:5432/physio?schema=public"
 PORT=3000
 ```
 
 #### Frontend `.env`
+
 ```
 VITE_API_URL="http://localhost:3000"
 ```
@@ -185,6 +190,7 @@ The backend API will be available at `/api/*` paths.
 ## CI/CD
 
 GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR to `main`:
+
 - Dependency installation
 - Code formatting check
 - Linting
@@ -195,23 +201,27 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR t
 ## Architecture Decisions
 
 ### Monorepo Structure
+
 - **pnpm workspaces** for dependency management
 - **Shared contracts package** for type safety between frontend and backend
 - **Separate build processes** for frontend and backend
 
 ### API Design
+
 - RESTful endpoints under `/api/` prefix
 - Zod validation for all inputs
 - Consistent error response format
 - Type-safe contracts shared between layers
 
 ### Frontend
+
 - React 19 with TypeScript
 - TanStack Query for data fetching
 - Tailwind CSS for styling
 - Vite for bundling
 
 ### Backend
+
 - Express 5 with TypeScript
 - Prisma ORM for database access
 - Vercel serverless functions for deployment
@@ -220,28 +230,33 @@ GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and PR t
 ## Troubleshooting
 
 ### "No matching version found for @vercel/express"
+
 The package was updated from `^1.1.0` to `^7.0.2`. Ensure you're using the latest version.
 
 ### "Unsupported engine: wanted: {\"node\":\">=24.0.0 <25\"}"
+
 This is a warning, not an error. The project requires Node.js 24 LTS. If you're using Node.js 22, the project will still work but you may encounter compatibility issues.
 
 ### Database connection errors
+
 Ensure your `DATABASE_URL` is correct and includes the `?sslmode=require` parameter for Neon connections.
 
 ### Prisma migration issues
+
 If you need to reset your database:
+
 ```bash
 pnpm db:migrate reset
 ```
 
 ## Useful Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Run both frontend and backend in dev mode |
-| `pnpm build` | Build both frontend and backend for production |
-| `pnpm lint` | Run ESLint on all packages |
-| `pnpm typecheck` | Run TypeScript type checking |
-| `pnpm test` | Run all tests |
-| `pnpm format:check` | Check code formatting |
-| `npx prettier --write .` | Format all files |
+| Command                  | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `pnpm dev`               | Run both frontend and backend in dev mode      |
+| `pnpm build`             | Build both frontend and backend for production |
+| `pnpm lint`              | Run ESLint on all packages                     |
+| `pnpm typecheck`         | Run TypeScript type checking                   |
+| `pnpm test`              | Run all tests                                  |
+| `pnpm format:check`      | Check code formatting                          |
+| `npx prettier --write .` | Format all files                               |

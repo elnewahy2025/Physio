@@ -79,7 +79,9 @@ export const errorHandler = (
 ) => {
   console.error("Error:", error);
 
-  const response = res as Response;
+  const response = res as {
+    status: (code: number) => { json: (data: unknown) => void };
+  };
 
   // Handle Zod validation errors
   if (error instanceof z.ZodError) {
@@ -122,7 +124,9 @@ export const notFoundHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
-  const response = res as Response;
+  const response = res as {
+    status: (code: number) => { json: (data: unknown) => void };
+  };
   response.status(404).json({
     error: {
       code: "NOT_FOUND",

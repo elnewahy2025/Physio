@@ -24,12 +24,14 @@ pnpm --filter @physio/frontend dev  # Frontend (port 5173)
 ```
 
 Then open:
+
 - **Frontend**: http://localhost:5173
 - **API Health Check**: http://localhost:3000/api/health
 
 ## ✨ Features
 
 ### Core Functionality
+
 - ✅ **Multi-role access**: Owner, Therapist, Secretary, Patient
 - ✅ **Appointment scheduling** with conflict detection
 - ✅ **Patient records** and medical history
@@ -41,6 +43,7 @@ Then open:
 - ✅ **Arabic/English localization** with RTL/LTR support
 
 ### Technical Features
+
 - ✅ **Monorepo** with pnpm workspaces
 - ✅ **Type-safe API contracts** shared between frontend and backend
 - ✅ **Express 5** backend with Zod validation
@@ -82,16 +85,16 @@ Physio/
 
 ## 🎯 Milestones
 
-| Milestone | Status | Description |
-|----------|--------|-------------|
-| **M1 - Foundation** | ✅ **Complete** | Monorepo, Vercel config, Prisma schema, CI/CD |
-| **M2 - Secure Access** | 📋 Planned | Authentication, authorization, sessions |
-| **M3 - Scheduling MVP** | 📋 Planned | Appointments, rooms, conflict checks |
-| **M4 - Treatment Records** | 📋 Planned | Therapy sessions, notes, attendance |
-| **M5 - Manual Billing** | 📋 Planned | Invoices, payments, PDF generation |
-| **M6 - Role Dashboards** | 📋 Planned | UI for all roles with RTL/LTR support |
-| **M7 - Integrations** | 📋 Planned | WhatsApp links, PWA features, offline sync |
-| **M8 - Launch** | 📋 Planned | Quality checks, deployment, monitoring |
+| Milestone                  | Status          | Description                                   |
+| -------------------------- | --------------- | --------------------------------------------- |
+| **M1 - Foundation**        | ✅ **Complete** | Monorepo, Vercel config, Prisma schema, CI/CD |
+| **M2 - Secure Access**     | 📋 Planned      | Authentication, authorization, sessions       |
+| **M3 - Scheduling MVP**    | 📋 Planned      | Appointments, rooms, conflict checks          |
+| **M4 - Treatment Records** | 📋 Planned      | Therapy sessions, notes, attendance           |
+| **M5 - Manual Billing**    | 📋 Planned      | Invoices, payments, PDF generation            |
+| **M6 - Role Dashboards**   | 📋 Planned      | UI for all roles with RTL/LTR support         |
+| **M7 - Integrations**      | 📋 Planned      | WhatsApp links, PWA features, offline sync    |
+| **M8 - Launch**            | 📋 Planned      | Quality checks, deployment, monitoring        |
 
 ## 🔧 Configuration
 
@@ -100,6 +103,7 @@ Physio/
 Create `.env` files in each directory:
 
 **Root `.env`:**
+
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/physio?schema=public"
 PORT=3000
@@ -107,12 +111,14 @@ VITE_API_URL="http://localhost:3000"
 ```
 
 **Backend `.env`:**
+
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/physio?schema=public"
 PORT=3000
 ```
 
 **Frontend `.env`:**
+
 ```env
 VITE_API_URL="http://localhost:3000"
 ```
@@ -132,21 +138,22 @@ pnpm db:seed
 
 ## 🏗️ Technology Stack
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Runtime** | Node.js 24 LTS | JavaScript runtime |
-| **Package Manager** | pnpm | Fast, disk-space efficient |
-| **Frontend** | React 19 + Vite 8 | Modern React with fast HMR |
-| **Styling** | Tailwind CSS 3 | Utility-first CSS |
-| **Backend** | Express 5 | Web framework |
-| **ORM** | Prisma 7 | Type-safe database access |
-| **Database** | PostgreSQL | Relational database |
-| **Hosting** | Vercel | Frontend + serverless functions |
-| **Database Host** | Neon | Managed PostgreSQL |
+| Layer               | Technology        | Purpose                         |
+| ------------------- | ----------------- | ------------------------------- |
+| **Runtime**         | Node.js 24 LTS    | JavaScript runtime              |
+| **Package Manager** | pnpm              | Fast, disk-space efficient      |
+| **Frontend**        | React 19 + Vite 8 | Modern React with fast HMR      |
+| **Styling**         | Tailwind CSS 3    | Utility-first CSS               |
+| **Backend**         | Express 5         | Web framework                   |
+| **ORM**             | Prisma 7          | Type-safe database access       |
+| **Database**        | PostgreSQL        | Relational database             |
+| **Hosting**         | Vercel            | Frontend + serverless functions |
+| **Database Host**   | Neon              | Managed PostgreSQL              |
 
 ## 📊 Local Development
 
 ### Run everything
+
 ```bash
 # In separate terminals
 pnpm --filter @physio/backend dev    # Port 3000
@@ -154,6 +161,7 @@ pnpm --filter @physio/frontend dev  # Port 5173
 ```
 
 ### Run checks
+
 ```bash
 pnpm install          # Install dependencies
 pnpm format:check     # Check formatting
@@ -204,6 +212,7 @@ This project is private and proprietary. All rights reserved.
 ## 📞 Support
 
 For questions or issues, please refer to:
+
 - [Project Plan](./Project_plan.md) - File of truth for scope and architecture
 - [M1 Setup Guide](./docs/M1_SETUP.md) - Detailed setup instructions
 
