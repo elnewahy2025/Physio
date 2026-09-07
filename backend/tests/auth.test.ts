@@ -1,7 +1,7 @@
 import request from "supertest";
 import { describe, expect, it, beforeAll, afterAll } from "vitest";
-import { createApp } from "./app.js";
-import { prisma } from "./lib/prisma.js";
+import { createApp } from "../src/app.js";
+import { prisma } from "../src/lib/prisma.js";
 
 // Helper to create a test user
 async function createTestUser(overrides = {}) {
